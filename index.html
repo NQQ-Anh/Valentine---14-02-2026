@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Happy Valentine ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      body {
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-align: center;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        max-width: 90%;
+        width: 420px;
+        z-index: 2;
+        animation: popIn 1s ease;
+      }
+
+      @keyframes popIn {
+        from {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+      }
+
+      #typewriter {
+        font-size: 1.1rem;
+        min-height: 60px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        background: #ff4b6e;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 999px;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.2s;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      button:hover {
+        transform: scale(1.05);
+        background: #ff2f59;
+      }
+
+      .hidden-message {
+        margin-top: 20px;
+        font-size: 1.05rem;
+        display: none;
+        min-height: 120px;
+      }
+
+      /* Hearts */
+      .heart {
+        position: absolute;
+        bottom: -20px;
+        font-size: 20px;
+        color: rgba(255, 0, 80, 0.8);
+        animation: floatUp linear forwards;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      @keyframes floatUp {
+        from {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(-110vh) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          width: 90%;
+          padding: 25px 20px;
+        }
+        h1 {
+          font-size: 1.8rem;
+        }
+        #typewriter {
+          font-size: 1rem;
+        }
+        button {
+          width: 100%;
+          padding: 14px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>💖 Happy Valentine 💖</h1>
+      <div id="typewriter"></div>
+
+      <button id="btn">Bấm vào đây nè 😳</button>
+
+      <div class="hidden-message" id="secret"></div>
+    </div>
+
+    <script>
+      // Typewriter intro
+      const introText = "Gửi đến người đặc biệt nhất của em 💌";
+      const typeEl = document.getElementById("typewriter");
+      let index = 0;
+
+      function typeWriterIntro() {
+        if (index < introText.length) {
+          typeEl.innerHTML += introText.charAt(index);
+          index++;
+          setTimeout(typeWriterIntro, 60);
+        }
+      }
+      typeWriterIntro();
+
+      // Đoạn tỏ tình dài
+      const longText = `Xin chào cô gái Ma Kết dịu dàng, nhút nhát, dễ thương đang đọc những dòng chữ này!
+      
+Chị biết không? Em là một người vụng về khi diễn đạt cảm xúc qua lời nói. Em đã rất suy nghĩ khi quyết định viết những lời này và gửi gắm nó qua lĩnh vực mà em giỏi nhất, nó cho em thêm tự tin hơn bình thường, đây là lần đầu em làm điều này đấy.
+Và cũng là lần đầu tiên em tặng socola cho một cô gái vào ngày đặc biệt như thế này.
+Em rất muốn thấy chị vui vẻ khi ăn socola mà em tặng nhưng có vẻ là không được rồi nhỉ 😅
+Hi vọng là trong Tết chị sẽ nhớ tới em và hãy gọi cho em ngay khoảnh khắc đó, em sẽ rất vui đó.
+Cuối cùng thì...
+
+CHÚC CHỊ CÓ MỘT NGÀY VALENTINE VUI VẺ VÀ HẠNH PHÚC NHÉ! 💖🥰`;
+
+      const btn = document.getElementById("btn");
+      const secret = document.getElementById("secret");
+
+      let i = 0;
+
+      btn.addEventListener("click", () => {
+        btn.style.display = "none";
+        secret.style.display = "block";
+        secret.innerHTML = "";
+        i = 0;
+        typeLongText();
+      });
+
+      function typeLongText() {
+        if (i < longText.length) {
+          if (longText.charAt(i) === "\n") {
+            secret.innerHTML += "<br/>";
+          } else {
+            secret.innerHTML += longText.charAt(i);
+          }
+          i++;
+          setTimeout(typeLongText, 35);
+        }
+      }
+
+      // Hearts bay
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = 16 + Math.random() * 24 + "px";
+        const duration = 4 + Math.random() * 4;
+        heart.style.animationDuration = duration + "s";
+
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), duration * 1000);
+      }
+
+      setInterval(createHeart, 300);
+    </script>
+  </body>
+</html>
